@@ -28,6 +28,16 @@ jobs:
           restore-keys: |
             mkdocs-material-
       - run: pip install mkdocs-material 
+      - name: Debug Paths
+        run: |
+          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+          echo "Site Directory: $GITHUB_WORKSPACE/site"
+          echo "Docs Directory: $GITHUB_WORKSPACE/tanssi-docs"
+          echo "Current Directory: $(pwd)"
+          echo "Contents of tanssi-docs:"
+          ls -la "$GITHUB_WORKSPACE/tanssi-docs"
+          echo "Contents of site:"
+          ls -la "$GITHUB_WORKSPACE/site"
       - name: Deploy Docs
         run: |
           mkdocs gh-deploy --force \
