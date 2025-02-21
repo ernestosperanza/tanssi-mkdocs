@@ -13,21 +13,36 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          path: main-repo  # Checkout the main repository to a subdirectory
+
+      - name: Checkout tanssi-docs repository
+        uses: actions/checkout@v4
+        with:
+          repository: moondance-labs/tanssi-docs
+          path: tanssi-docs
+          ref: main  # or the branch you want to use
+
       - name: Configure Git Credentials
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+
       - uses: actions/setup-python@v5
         with:
           python-version: 3.x
+
       - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
+
       - uses: actions/cache@v4
         with:
           key: mkdocs-material-${{ env.cache_id }}
           path: .cache 
           restore-keys: |
             mkdocs-material-
+
       - run: pip install mkdocs-material 
+
       - name: Debug Paths
         run: |
           echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
@@ -38,7 +53,14 @@ jobs:
           ls -la "$GITHUB_WORKSPACE/tanssi-docs"
           echo "Contents of site:"
           ls -la "$GITHUB_WORKSPACE/site"
+
+      - name: Build Docs
+        run: |
+          mkdocs build \
+            --site-dir "$GITHUB_WORKSPACE/site" \
+            --docs-dir "$GITHUB_WORKSPACE/tanssi-docs"
+
       - name: Deploy Docs
         run: |
           mkdocs gh-deploy --force \
-            --site-dir "$GITHUB_WORKSPACE/site" 
+            --site-dir "$GITHUB_WORKSPACE/site"
