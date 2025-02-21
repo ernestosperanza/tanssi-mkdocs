@@ -46,4 +46,4 @@ jobs:
           find -type f -name "*.md" -exec sed -i -e 's|](/|](/tanssi-mkdocs/|g' -e 's|href="/|href="/tanssi-mkdocs/|g' {} \;
       - name: Deploy Docs
         working-directory: tanssi-docs
-        run: mkdocs gh-deploy --force --clean --site-dir ./site
+        run: mkdocs gh-deploy --force --clean
