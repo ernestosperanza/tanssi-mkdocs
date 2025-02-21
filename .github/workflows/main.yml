@@ -43,4 +43,4 @@ jobs:
           python -m pip install -r requirements.txt
       - name: Deploy Docs
         working-directory: tanssi-docs
-        run: mkdocs gh-deploy --force --clean
+        run: mkdocs gh-deploy --force --clean --site-dir "$GITHUB_WORKSPACE/site"
