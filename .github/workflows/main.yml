@@ -23,6 +23,7 @@ jobs:
           repository: papermoonio/tanssi-mkdocs
           path: tanssi-docs
           ref: ${{ inputs.branch }}
+          fetch-depth: 0 
       - uses: actions/setup-python@v5
         with:
           python-version: 3.x
