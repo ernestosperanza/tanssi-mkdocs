@@ -43,7 +43,10 @@ jobs:
           python -m pip install -r repo/requirements.txt
       - name: Build Docs
         run: |
-          mkdocs build --site-dir ./site
+          mkdocs build \
+            --config-file repo/mkdocs.yml \
+            --docs-dir repo/tanssi-docs \
+            --site-dir ./site
       - name: Debug Directory Structure
         run: |
           echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
@@ -54,4 +57,6 @@ jobs:
           ls -la site
       - name: Deploy Docs
         run: |
-          mkdocs gh-deploy --force --clean --site-dir ./site
+          mkdocs gh-deploy --force --clean \
+            --config-file repo/mkdocs.yml \
+            --site-dir ./site
