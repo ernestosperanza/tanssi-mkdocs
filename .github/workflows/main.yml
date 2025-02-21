@@ -31,5 +31,4 @@ jobs:
       - name: Deploy Docs
         run: |
           mkdocs gh-deploy --force \
-            --site-dir "$GITHUB_WORKSPACE/site" \
-            --docs-dir "$GITHUB_WORKSPACE/tanssi-docs"
+            --site-dir "$GITHUB_WORKSPACE/site" 
