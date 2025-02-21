@@ -41,10 +41,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip setuptools 'cython<3.0.0' wheel
           python -m pip install -r repo/requirements.txt
-      - name: Create Symbolic Link for docs_dir
-        run: |
-          ln -s "$GITHUB_WORKSPACE/repo/tanssi-docs" "$GITHUB_WORKSPACE/tanssi-docs"
       - name: Build Docs
+        env:
+          MKDOCS_DOCS_DIR: repo/tanssi-docs  # Override docs_dir
         run: |
           mkdocs build --config-file repo/mkdocs.yml --site-dir ./site
       - name: Debug Directory Structure
@@ -53,8 +52,8 @@ jobs:
           echo "Current Directory: $(pwd)"
           echo "Contents of repo:"
           ls -la repo
-          echo "Contents of tanssi-docs:"
-          ls -la tanssi-docs
+          echo "Contents of repo/tanssi-docs:"
+          ls -la repo/tanssi-docs
           echo "Contents of site:"
           ls -la site
       - name: Deploy Docs
