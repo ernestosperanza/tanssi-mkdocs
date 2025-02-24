@@ -4,6 +4,12 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to build and deploy documentation from"
+        required: true
+        default: "master"
+        
 permissions:
   contents: write
 jobs:
@@ -47,4 +53,5 @@ jobs:
       - name: Replace `/assets` with `assets`
         run: |
           find . -type f -exec sed -i 's|/assets|assets|g' {} +
-      - run: mkdocs gh-deploy --force --clean --site-dir ./site
+      - name: Deploy Docs
+        run: mkdocs gh-deploy --force --clean --site-dir ./site
